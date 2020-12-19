@@ -1,13 +1,74 @@
 .content {
   min-height: calc(100vh - 193px);
 }
+.logbtn {
+  display: flex;
+  justify-content: flex-end;
+}
 .loader {
   display: flex;
   justify-content: center;
   margin-top: 30vh;
 }
+.lines {
+  align-items: center;
+  justify-content: center;
+}
+.modal-backdrop {
+  background-color: #686868 !important;
+}
+.lines > div {
+  height: 1px;
+  background-color: white;
+}
+
+.loginmodal {
+  background-color: #343a40;
+  box-shadow: 0px 0px 20px 2px #343a40;
+}
+.form > div {
+  background-color: white;
+  box-shadow: inset 0px 0px 10px 0px #343a4052;
+}
+.form > div > input {
+  border: none;
+  font-size: larger;
+  width: 100%;
+  outline: none;
+}
+.form > div > i {
+  width: 15%;
+}
+.logToggler {
+  display: flex;
+}
+.logToggler > button {
+  width: 100%;
+  outline: none;
+  border: none;
+  padding: 15px;
+  background-color: white;
+}
+.logToggler > button:focus {
+  outline-style: none !important;
+}
+.form > div {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  padding: 10px;
+  margin: 10px;
+}
+.dimensions {
+  width: 15%;
+  height: 50px;
+}
+
 .navbar {
   margin-bottom: 80px;
+}
+.shadow-bar {
+  box-shadow: 0px 5px 10px 0px #495057a8;
 }
 .copyright {
   padding-top: 10px;
@@ -25,6 +86,7 @@
 .footer {
   margin-top: 40px;
   background-color: #343a40;
+  box-shadow: 0px -3px 10px 0px #495057a8;
   padding: 10px 20px 10px 20px;
   color: white;
 }

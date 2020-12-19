@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const moment = require("moment");
+const config = require("config");
 const path = require("path");
 const app = express();
 
@@ -8,17 +8,15 @@ const app = express();
 app.use(express.json());
 
 // logger Middleware. --DEV mode.
-// app.use((req, res, next) => {
-//   console.log(`${req.method} : ${req.url} | ${moment().format()}`);
-//   next();
-// });
+app.use(require("./middleware/logger"));
 
 // use routes.
 app.use("/api/posts", require("./routes/api/posts"));
 app.use("/api/users", require("./routes/api/users"));
+app.use("/api/auth", require("./routes/api/auth"));
 
 // DB config
-const db = require("./config/keys").mongoURI;
+const db = config.get("mongoURI");
 
 // Connecting to mongoDB
 mongoose
@@ -31,6 +29,7 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error(err));
 
+// Production step.
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 

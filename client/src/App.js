@@ -6,12 +6,21 @@ import SinglePost from "./components/SinglePost";
 import About from "./components/About";
 import Home from "./components/Home";
 import AppFooter from "./components/AppFooter";
+import Register from "./components/Register";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from "reactstrap";
+import { loadUser } from "./actions/AuthActions";
+import { useEffect } from "react";
+import store from "./store/store";
+
 function App() {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  });
   return (
     <Router>
       <div className="App">
+        <Register />
         <div className="content">
           <AppNavbar />
           <Container>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Col, Row } from "reactstrap";
+import { Link } from "react-router-dom";
 import dp from "./../images/dp.gif";
 const AppFooter = () => {
   return (
@@ -11,7 +12,11 @@ const AppFooter = () => {
               <div className="m-2">
                 <div className="foot-dp">
                   <img src={dp} alt="dp" className="dp mr-2"></img>
-                  <h3>Developer </h3>
+                  <h3>
+                    <Link className="text-success" to="/about">
+                      About CPC
+                    </Link>
+                  </h3>
                 </div>
                 <p>
                   Handcrafted with <i className="fa fa-heart"></i>{" "}

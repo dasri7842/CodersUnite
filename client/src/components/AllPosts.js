@@ -14,10 +14,10 @@ const AllPosts = ({ FetchPosts, post }) => {
         <h1>{post.title}</h1>
         <p>{post.snippet}</p>
         <small>
-          Last update : <Moment fromNow>{post.updatedAt}</Moment>
+          Last Edit : <Moment fromNow>{post.updatedAt}</Moment>
         </small>
         <small style={{ float: "right" }}>
-          Created : <Moment fromNow>{post.createdAt}</Moment>
+          Posted : <Moment fromNow>{post.createdAt}</Moment>
         </small>
       </Link>
     </div>

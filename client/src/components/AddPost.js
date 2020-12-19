@@ -1,9 +1,10 @@
 import { connect } from "react-redux";
 import { useState } from "react";
 import { AddPost as NewPost, UpdatePost } from "./../actions/PostActions";
+import { Toggle_modal } from "./../actions/ToggleActions";
 import { Redirect } from "react-router-dom";
 import { Button, Form, FormGroup, Container, Label, Input } from "reactstrap";
-const AddPost = ({ location, NewPost, UpdatePost }) => {
+const AddPost = ({ location, NewPost, UpdatePost, auth, Toggle_modal }) => {
   const { id, title, body, snippet, isUpdated } = location.state;
   const [postForm, setPostForm] = useState({
     id,
@@ -20,17 +21,21 @@ const AddPost = ({ location, NewPost, UpdatePost }) => {
     });
   };
   const handelsubmit = (e) => {
-    e.preventDefault();
-    const post = {
-      title: postForm.title,
-      body: postForm.body,
-      snippet: postForm.snippet,
-    };
-    if (isUpdated) {
-      const updPost = { ...post, _id: postForm.id };
-      UpdatePost(updPost);
-    } else NewPost(post);
-    setRedirect(true);
+    if (!auth.isAuthenticated) {
+      Toggle_modal();
+    } else {
+      e.preventDefault();
+      const post = {
+        title: postForm.title,
+        body: postForm.body,
+        snippet: postForm.snippet,
+      };
+      if (isUpdated) {
+        const updPost = { ...post, _id: postForm.id };
+        UpdatePost(updPost);
+      } else NewPost(post);
+      setRedirect(true);
+    }
   };
   if (redirect) return <Redirect to="/api/posts" />;
   return (
@@ -69,4 +74,11 @@ const AddPost = ({ location, NewPost, UpdatePost }) => {
     </Container>
   );
 };
-export default connect(null, { NewPost, UpdatePost })(AddPost);
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { NewPost, UpdatePost, Toggle_modal })(
+  AddPost
+);

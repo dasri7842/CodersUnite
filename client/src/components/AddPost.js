@@ -5,6 +5,7 @@ import { Toggle_modal } from "./../actions/ToggleActions";
 import { Redirect } from "react-router-dom";
 import { Button, Form, FormGroup, Container, Label, Input } from "reactstrap";
 const AddPost = ({ location, NewPost, UpdatePost, auth, Toggle_modal }) => {
+  // this is redirected from edit button . So Filled the intitial fields and take the action UPDATE_POST
   const { id, title, body, snippet, isUpdated } = location.state;
   const [postForm, setPostForm] = useState({
     id,
@@ -29,6 +30,7 @@ const AddPost = ({ location, NewPost, UpdatePost, auth, Toggle_modal }) => {
         title: postForm.title,
         body: postForm.body,
         snippet: postForm.snippet,
+        author: auth.user?.username,
       };
       if (isUpdated) {
         const updPost = { ...post, _id: postForm.id };

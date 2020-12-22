@@ -55,7 +55,7 @@ const AppNavbar = (props) => {
   const logoutBtn = (
     <UncontrolledDropdown nav inNavbar key="69">
       <DropdownToggle nav caret>
-        Hi, {props.auth.user ? props.auth.user.name : "Guest"}
+        Hi, {props.auth.user ? props.auth.user.username : "Guest"}
       </DropdownToggle>
       <DropdownMenu right className="text-center">
         <DropdownItem>Account</DropdownItem>

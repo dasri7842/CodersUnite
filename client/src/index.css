@@ -79,9 +79,11 @@
 }
 .post {
   margin: 10px;
+  margin-bottom: 30px;
   padding: 10px;
   border-radius: 10px;
   background-color: #343a4044;
+  box-shadow: 1px 1px 10px 0px #343a40;
 }
 .footer {
   margin-top: 40px;
@@ -94,6 +96,7 @@
   padding: 10px;
   border-radius: 10px;
   background-color: #343a4044;
+  box-shadow: 3px 3px 10px 0px #343a40;
 }
 .text-link {
   color: inherit;

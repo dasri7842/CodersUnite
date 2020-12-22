@@ -6,7 +6,7 @@ import { clearErrors } from "./../../actions/ErrorActions";
 
 const LogIn = ({ error, auth, loginUser, clearErrors }) => {
   const [loginForm, setLoginForm] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -21,7 +21,7 @@ const LogIn = ({ error, auth, loginUser, clearErrors }) => {
   const handelsubmit = (e) => {
     e.preventDefault();
     const Form = {
-      email: loginForm.email,
+      username: loginForm.username,
       password: loginForm.password,
     };
     loginUser(JSON.stringify(Form));
@@ -55,7 +55,7 @@ const LogIn = ({ error, auth, loginUser, clearErrors }) => {
           <i className="fa fa-user fa-2x"></i>
           <input
             type="text"
-            name="email"
+            name="username"
             autoComplete="username"
             placeholder="Your username or Email "
             onChange={handleChange}

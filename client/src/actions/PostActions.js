@@ -11,16 +11,24 @@ export const FetchPosts = () => (dispatch) => {
   );
 };
 
-export const DeletePost = (payload) => (dispatch) => {
-  axios.delete(`/api/posts/${payload}`).then(() =>
+export const DeletePost = (payload) => (dispatch, getState) => {
+  axios.delete(`/api/posts/${payload}`, tokenConfig(getState)).then(() =>
     dispatch({
       type: types.DELETE_POST,
       payload,
     })
   );
 };
-export const UpdatePost = (payload) => () => {
-  axios.put("/api/posts", payload).catch((err) => console.error(err));
+export const UpdatePost = (payload) => (dispatch, getState) => {
+  axios
+    .put("/api/posts", payload, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: types.UPDATE_POST,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.error(err));
 };
 
 export const AddPost = (payload) => (dispatch, getState) => {

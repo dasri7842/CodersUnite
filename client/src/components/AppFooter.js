@@ -19,7 +19,7 @@ const AppFooter = () => {
                   </h3>
                 </div>
                 <p>
-                  Handcrafted with <i className="fa fa-heart"></i>{" "}
+                  Handcrafted with <i className="fa fa-handshake-o"></i>{" "}
                 </p>
               </div>
             </Col>
@@ -53,7 +53,7 @@ const AppFooter = () => {
         </div>
       </footer>
       <div className="copyright">
-        <p>&copy;2020 TrueCoder-All rights reseverd</p>
+        <p>&copy;2020 TrueCoder-Hacks allowed</p>
       </div>
     </div>
   );

@@ -12,20 +12,21 @@ const User = require("../../models/User");
 // @descrption authorize an user
 // @access Public
 router.post("/", (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!email || !password)
-    res.status(400).json({ msg: "Bruh, Fill all the Fields" });
+  if (!username || !password)
+    return res.status(400).json({ msg: "Complete all the Fields" });
 
-  User.findOne({ email }, (err, user) => {
+  User.findOne({ username: username }, (err, user) => {
     if (err) throw err;
-    if (!user)
-      return res.status(400).json({ msg: "That harami doesn't Exist" });
+    if (!user) return res.status(400).json({ msg: "User doesn't Exist" });
 
     bcrypt.compare(password, user.password, (err, success) => {
       if (err) throw err;
       if (!success)
-        return res.status(400).json({ msg: "Psych, That's the wrong number!" });
+        return res
+          .status(400)
+          .json({ msg: "Username and password doesn't match" });
       jwt.sign(
         { id: user.id },
         config.get("jwtSecret"),
@@ -34,7 +35,7 @@ router.post("/", (req, res) => {
           if (err) throw err;
           res.json({
             token,
-            user: { id: user.id, name: user.name, email: user.email },
+            user: { username: user.username, email: user.email },
           });
         }
       );
@@ -49,6 +50,6 @@ router.get("/user", auth, (req, res) => {
   User.findById(req.user.id)
     .select("-password")
     .then((data) => res.json(data))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).res.json(err));
 });
 module.exports = router;

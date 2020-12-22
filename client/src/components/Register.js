@@ -15,7 +15,7 @@ const Register = ({ Toggle, Toggle_modal, Toggle_Foucs }) => {
       style={{ position: "absolute", top: "15px", right: "15px" }}
       onClick={Toggle_modal}
     >
-      <i class="fa fa-times fa-2x" aria-hidden="true" />
+      <i className="fa fa-times fa-2x" aria-hidden="true" />
     </button>
   );
 

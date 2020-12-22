@@ -19,11 +19,12 @@ router.get("/", (req, res) => {
 // @descrption Post a blogpost
 // @access Private
 router.post("/", auth, (req, res) => {
-  const { title, body, snippet } = req.body;
+  const { title, body, snippet, author } = req.body;
   const newpost = new Post({
     title,
     body,
     snippet,
+    author,
   });
   newpost
     .save()
@@ -49,8 +50,8 @@ router.put("/", auth, (req, res) => {
 // @route --> /api/posts/:id
 // @description --> get a post
 // @access Public
-router.get("/:id", (req, res) => {
-  Post.findById(req.params.id)
+router.get("/:username", (req, res) => {
+  Post.findById(req.params.username)
     .then((post) => res.json(post))
     .catch((err) => res.status(404).json({ success: false }));
 });

@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import Moment from "react-moment";
 import { FetchPosts } from "./../actions/PostActions";
 import Loader from "./Loader";
-const AllPosts = ({ FetchPosts, post }) => {
+const AllPosts = ({ FetchPosts, post, author }) => {
   useEffect(() => {
-    FetchPosts();
-  }, [FetchPosts]);
+    FetchPosts(author);
+  }, [FetchPosts, author]);
   const Allposts = post.posts.map((post) => (
     <div className="post col-md-8 mx-auto" key={post._id}>
       <Link to={`/api/users/${post.author}`} className="text-link text-primary">

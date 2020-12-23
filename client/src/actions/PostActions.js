@@ -1,9 +1,15 @@
 import axios from "axios";
 import * as types from "./types";
 import { tokenConfig } from "./AuthActions";
-export const FetchPosts = () => (dispatch) => {
+export const FetchPosts = (payload) => (dispatch) => {
   dispatch(setLoading());
-  axios.get("/api/posts").then((res) =>
+  const config = {};
+  if (payload) {
+    config["headers"] = {
+      author: payload,
+    };
+  }
+  axios.get("/api/posts", config).then((res) =>
     dispatch({
       type: types.FETCH_POSTS,
       payload: res.data,

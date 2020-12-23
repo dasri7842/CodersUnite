@@ -65,8 +65,28 @@ router.post("/", (req, res) => {
 router.get("/:id", (req, res) => {
   User.findOne({ username: req.params.id })
     .select("-password")
-    .then((data) => res.json(data))
-    .catch((err) => res.status(404).json({ success: false }));
+    .then((data) => {
+      data ? res.json(data) : res.json({ msg: "User Not found!" });
+    })
+    .catch((err) =>
+      res.status(404).json({ msg: "cannot get the user, Try after sometime." })
+    );
+});
+
+// @route api/users/user
+// @descrption updates user profile
+// @access private (needs token).
+router.post("/user", auth, (req, res) => {
+  const { username, info } = req.body;
+  User.findOneAndUpdate(
+    { username: username }, // filter
+    { $set: { info: info } }, // update if found or upsert property
+    { new: true, select: "-password" }, // Returne doc as Updated
+    (err, doc) => {
+      if (err) res.status(500).json({ msg: "Something Went Wrong :(" });
+      res.json(doc);
+    }
+  );
 });
 
 // @route api/users/validateuser
@@ -93,22 +113,6 @@ router.get("/validateemail", (req, res) => {
       else res.json(false);
     })
     .catch((err) => res.status(500).res.json(err));
-});
-
-// @route api/users/user
-// @descrption updates user profile
-// @access private (needs token).
-router.post("/user", auth, (req, res) => {
-  const { username, profile } = req.body;
-  User.findOneAndUpdate(
-    { username: username }, // filter
-    { $set: { profile: profile } }, // update if found or upsert property
-    { new: true, select: "-password" }, // Returne doc as Updated
-    (err, doc) => {
-      if (err) res.status(500).json({ msg: "Something Went Wrong :(" });
-      res.json(doc);
-    }
-  );
 });
 
 module.exports = router;

@@ -9,7 +9,10 @@ const Post = require("../../models/Post");
 // @descrption Get all posts
 // @access Public
 router.get("/", (req, res) => {
-  Post.find()
+  const author = req.header("author");
+  const filter = {};
+  if (author) filter["author"] = author;
+  Post.find(filter)
     .sort({ updatedAt: -1 })
     .then((posts) => res.json(posts))
     .catch((err) => console.log(err));

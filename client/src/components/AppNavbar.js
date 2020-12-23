@@ -58,8 +58,27 @@ const AppNavbar = (props) => {
         Hi, {props.auth.user ? props.auth.user.username : "Guest"}
       </DropdownToggle>
       <DropdownMenu right className="text-center">
-        <DropdownItem>Account</DropdownItem>
-        <DropdownItem>Edit Profile</DropdownItem>
+        <DropdownItem>
+          <Link
+            className="text-link"
+            to={`/api/users/${props.auth.user?.username}`}
+          >
+            Account
+          </Link>
+        </DropdownItem>
+        {/* <DropdownItem>
+          <Link
+            to={{
+              pathname: `/api/users/${props.auth.user?.username}`,
+              state: {
+                edit: true,
+              },
+            }}
+            className="text-link"
+          >
+            Edit Profile
+          </Link>
+        </DropdownItem> */}
         <DropdownItem divider />
         <Button
           size="md"

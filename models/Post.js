@@ -19,6 +19,9 @@ const PostSchema = new Schema(
       type: String,
       required: true,
     },
+    comments: { type: Array },
+    views: { type: Number },
+    votes: { type: Number },
   },
   { timestamps: true }
 );

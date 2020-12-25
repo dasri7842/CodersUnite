@@ -120,6 +120,7 @@ const AppNavbar = (props) => {
               >
                 Feed
               </NavLink>
+
               <NavLink
                 onClick={closeNavbar}
                 className="my-auto"

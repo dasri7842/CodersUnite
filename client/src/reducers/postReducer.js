@@ -1,6 +1,7 @@
 import * as types from "./../actions/types";
 const initState = {
   posts: [],
+  onePost: {},
   loading: false,
 };
 
@@ -11,6 +12,18 @@ const postReducer = (state = initState, action) => {
         ...state,
         posts: action.payload,
         loading: false,
+      };
+    case types.GET_POST:
+      return {
+        ...state,
+        onePost: action.payload,
+        loading: false,
+      };
+    case types.DO_VOTE:
+    case types.ADD_COMMENT:
+      return {
+        ...state,
+        onePost: action.payload,
       };
     case types.ADD_POST:
       return {

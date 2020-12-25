@@ -60,20 +60,6 @@ router.post("/", (req, res) => {
 });
 
 // @route api/users/user
-// @descrption gets user profile
-// @access Public
-router.get("/:id", (req, res) => {
-  User.findOne({ username: req.params.id })
-    .select("-password")
-    .then((data) => {
-      data ? res.json(data) : res.json({ msg: "User Not found!" });
-    })
-    .catch((err) =>
-      res.status(404).json({ msg: "cannot get the user, Try after sometime." })
-    );
-});
-
-// @route api/users/user
 // @descrption updates user profile
 // @access private (needs token).
 router.post("/user", auth, (req, res) => {
@@ -115,4 +101,17 @@ router.get("/validateemail", (req, res) => {
     .catch((err) => res.status(500).res.json(err));
 });
 
+// @route api/users/user
+// @descrption gets user profile
+// @access Public
+router.get("/:id", (req, res) => {
+  User.findOne({ username: req.params.id })
+    .select("-password")
+    .then((data) => {
+      data ? res.json(data) : res.json({ msg: "User Not found!" });
+    })
+    .catch((err) =>
+      res.status(404).json({ msg: "cannot get the user, Try after sometime." })
+    );
+});
 module.exports = router;

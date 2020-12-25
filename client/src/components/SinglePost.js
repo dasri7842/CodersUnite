@@ -1,59 +1,89 @@
-import { Redirect, Link } from "react-router-dom";
-import { DeletePost } from "./../actions/PostActions";
+import { Redirect } from "react-router-dom";
+import { DeletePost, GetPost, Addcomment } from "./../actions/PostActions";
 import { useState, useEffect } from "react";
+import { Toggle_modal } from "./../actions/ToggleActions";
 import { connect } from "react-redux";
 import Loader from "./Loader";
-const SinglePost = ({ match, DeletePost, post, user }) => {
-  const [blogpost, setBlogpost] = useState({});
+import Voter from "./styleditems/Voter";
+import CommentItem from "./styleditems/CommentItem";
+import FullSinglePost from "./styleditems/FullSinglePost";
+import { Button, FormGroup, Input } from "reactstrap";
+
+const SinglePost = ({
+  match,
+  isauth,
+  DeletePost,
+  post,
+  user,
+  GetPost,
+  Toggle_modal,
+  isloading,
+  Addcomment,
+}) => {
   const [delpost, setDelpost] = useState(false);
+  const [comment, setcomment] = useState("");
 
   useEffect(() => {
-    setBlogpost(post.posts.find((data) => data._id === match.params.id));
-  }, [match.params.id, post.posts]);
+    GetPost(match.params.id);
+  }, [match.params.id, GetPost]);
+
+  const handleAddcomment = (e) => {
+    if (!isauth) Toggle_modal();
+    else {
+      e.preventDefault();
+      const data = { content: comment, author: user.username };
+      if (comment.length) Addcomment(match.params.id, JSON.stringify(data));
+      setcomment("");
+    }
+  };
 
   const handleDelete = () => {
     DeletePost(match.params.id);
     setDelpost(true);
   };
 
+  const comments = post?.comments?.map((data, id) => (
+    <CommentItem data={data} key={id} />
+  ));
+
   if (delpost) return <Redirect to="/api/posts" />;
+
   return (
     <div className="PersonInfo">
-      {blogpost ? (
-        <div className="singlepost">
-          <Link
-            to={`/api/users/${blogpost.author}`}
-            className="text-link text-primary"
-          >
-            <small style={{ float: "right" }}> ~{blogpost.author}</small>
-          </Link>
-          <h1>{blogpost.title}</h1>
-          <p className="my-4">{blogpost.body}</p>
-          <h4>{blogpost.snippet}</h4>
+      {!isloading ? (
+        <div>
+          <div className="d-flex">
+            <Voter votes={post.votes} id={match.params.id} />
+            <FullSinglePost
+              handleDelete={handleDelete}
+              post={post}
+              user={user}
+            />
+          </div>
 
-          {user && user.username === blogpost.author ? (
-            <div>
-              <Link
-                to={{
-                  pathname: "/api/posts/newpost",
-                  state: {
-                    id: blogpost._id,
-                    title: blogpost.title,
-                    body: blogpost.body,
-                    snippet: blogpost.snippet,
-                    isUpdated: true,
-                  },
-                }}
-              >
-                <button className=" btn btn-dark m-1">
-                  <i className="fa fa-pencil"></i> EDIT
-                </button>
-              </Link>
-              <button className=" btn btn-danger m-1" onClick={handleDelete}>
-                <i className="fa fa-trash"></i> DELETE
-              </button>
-            </div>
-          ) : null}
+          <hr className="my-5" />
+
+          <div className="container row ml-2">
+            <FormGroup className="col-9">
+              <Input
+                type="textarea"
+                name="body"
+                rows={2}
+                value={comment}
+                onChange={(e) => setcomment(e.target.value)}
+                placeholder="Add a comment here..."
+              />
+            </FormGroup>
+            <FormGroup className="m-auto col-3">
+              <Button className="rounded p-1 " onClick={handleAddcomment}>
+                <i className="fa fa-send-o"> Post </i>
+              </Button>
+            </FormGroup>
+          </div>
+
+          <hr className="my-3" />
+          <div>{post.comments?.length} comments</div>
+          {comments?.reverse()}
         </div>
       ) : (
         <Loader />
@@ -62,7 +92,14 @@ const SinglePost = ({ match, DeletePost, post, user }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  post: state.post,
+  post: state.post.onePost,
+  isloading: state.post.loading,
   user: state.auth.user,
+  isauth: state.auth.isAuthenticated,
 });
-export default connect(mapStateToProps, { DeletePost })(SinglePost);
+export default connect(mapStateToProps, {
+  DeletePost,
+  Toggle_modal,
+  Addcomment,
+  GetPost,
+})(SinglePost);

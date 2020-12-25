@@ -10,6 +10,13 @@
   justify-content: center;
   margin-top: 30vh;
 }
+.btn-none {
+  border: none;
+  background: none;
+}
+.btn-none:focus {
+  outline: none;
+}
 .lines {
   align-items: center;
   justify-content: center;
@@ -94,6 +101,7 @@
 }
 .singlepost {
   padding: 10px;
+  width: 100%;
   border-radius: 10px;
   background-color: #343a4044;
   box-shadow: 3px 3px 10px 0px #343a40;

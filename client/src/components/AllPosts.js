@@ -17,12 +17,18 @@ const AllPosts = ({ FetchPosts, post, author }) => {
         <h3 className="text-truncate mb-3">{post.title}</h3>
       </Link>
       <p>{post.snippet}</p>
-      <small>
-        Last Edit : <Moment fromNow>{post.updatedAt}</Moment>
-      </small>
-      <small style={{ float: "right" }}>
-        Posted : <Moment fromNow>{post.createdAt}</Moment>
-      </small>
+      <hr className="m-1" />
+      <div className="d-flex justify-content-around">
+        <small>{post.views} views</small>
+        <small>{post?.votes} votes</small>
+        <small>
+          {post.comments.length} <i className="fa fa-comments-o"></i>
+        </small>
+        <small>
+          <i className="fa fa-clock-o mx-2"></i>
+          <Moment fromNow>{post.createdAt}</Moment>
+        </small>
+      </div>
     </div>
   ));
   if (post.loading) return <Loader />;

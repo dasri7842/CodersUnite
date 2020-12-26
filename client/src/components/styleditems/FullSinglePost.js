@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import MDEditor from "@uiw/react-md-editor";
 
 const FullSinglePost = ({ post, user, handleDelete }) => {
   return (
@@ -8,8 +9,9 @@ const FullSinglePost = ({ post, user, handleDelete }) => {
         <small style={{ float: "right" }}> ~{post.author}</small>
       </Link>
 
-      <h3>{post.title}</h3>
-      <p className="my-4">{post.body}</p>
+      <h3 className="text-center my-2">{post.title}</h3>
+      <MDEditor.Markdown source={post.body} />
+      {/* <p className="my-4">{post.body}</p> */}
       <h6>{post.snippet}</h6>
 
       {user && user.username === post.author ? (

@@ -44,10 +44,10 @@ const Profile = ({ match, auth, profile, get_profile, edit_profile }) => {
 
           <div className="text-muted display-5">{profile.profile?.email}</div>
           <div className="text-muted text-truncate display-5">
-            {profile.profile?.info?.bio}
+            Bio : {profile.profile?.info?.bio}
           </div>
           <div className="text-muted text-truncate display-5">
-            {profile.profile?.info?.college}
+            College : {profile.profile?.info?.college}
           </div>
         </div>
       </div>

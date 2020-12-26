@@ -1,14 +1,11 @@
 import { Modal } from "reactstrap";
-import GoogleLogin from "react-google-login";
 import LogIn from "./register/LogIn";
+
 import { Toggle_Foucs, Toggle_modal } from "./../actions/ToggleActions";
 import { connect } from "react-redux";
 import SignUp from "./register/SignUp";
+import GoogleConnect from "./register/GoogleConnect";
 const Register = ({ Toggle, Toggle_modal, Toggle_Foucs }) => {
-  const responseGoogle = (response) => {
-    console.log(response);
-  };
-
   const externalCloseBtn = (
     <button
       className="close text-light"
@@ -50,14 +47,7 @@ const Register = ({ Toggle, Toggle_modal, Toggle_Foucs }) => {
           <div className="col-4"></div>
         </div>
         <div className="row lines">
-          <GoogleLogin
-            className="m-4 text-center"
-            buttonText="Connect using Google"
-            clientId=""
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={"single_host_origin"}
-          />
+          <GoogleConnect />
         </div>
       </div>
     </Modal>
@@ -76,6 +66,7 @@ const logInstyle = [
 const mapStateToProps = (state) => ({
   Toggle: state.Toggle,
 });
-export default connect(mapStateToProps, { Toggle_modal, Toggle_Foucs })(
-  Register
-);
+export default connect(mapStateToProps, {
+  Toggle_modal,
+  Toggle_Foucs,
+})(Register);

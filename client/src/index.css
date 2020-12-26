@@ -103,7 +103,8 @@
   padding: 10px;
   width: 100%;
   border-radius: 10px;
-  background-color: #343a4044;
+  background-color: #343a40;
+  color: whitesmoke;
   box-shadow: 3px 3px 10px 0px #343a40;
 }
 .text-link {

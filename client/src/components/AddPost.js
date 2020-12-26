@@ -3,17 +3,27 @@ import { useState } from "react";
 import { AddPost as NewPost, UpdatePost } from "./../actions/PostActions";
 import { Toggle_modal } from "./../actions/ToggleActions";
 import { Redirect } from "react-router-dom";
-import { Button, Form, FormGroup, Container, Label, Input } from "reactstrap";
+import MDEditor from "@uiw/react-md-editor";
+import {
+  Button,
+  Form,
+  FormText,
+  FormGroup,
+  Container,
+  Label,
+  Input,
+  Badge,
+} from "reactstrap";
 const AddPost = ({ location, NewPost, UpdatePost, auth, Toggle_modal }) => {
   // this is redirected from edit button . So Filled the intitial fields and take the action UPDATE_POST
   const { id, title, body, snippet, isUpdated } = location.state;
   const [postForm, setPostForm] = useState({
     id,
     title,
-    body,
     snippet,
     redirect: false,
   });
+  const [value, setValue] = useState(body); // for markdown editor
   const [redirect, setRedirect] = useState(false);
   const handleChange = (e) => {
     setPostForm({
@@ -22,13 +32,15 @@ const AddPost = ({ location, NewPost, UpdatePost, auth, Toggle_modal }) => {
     });
   };
   const handelsubmit = (e) => {
+    if (value === "" || postForm.title === "" || !postForm.snippet === "")
+      return;
     if (!auth.isAuthenticated) {
       Toggle_modal();
     } else {
       e.preventDefault();
       const post = {
         title: postForm.title,
-        body: postForm.body,
+        body: value,
         snippet: postForm.snippet,
         author: auth.user?.username,
       };
@@ -41,7 +53,7 @@ const AddPost = ({ location, NewPost, UpdatePost, auth, Toggle_modal }) => {
   };
   if (redirect) return <Redirect to="/api/posts" />;
   return (
-    <Container className="col-md-6 mx-auto">
+    <Container className="col-md-8 mx-auto">
       <Form className="m-6">
         <FormGroup>
           <Label>Title</Label>
@@ -54,13 +66,23 @@ const AddPost = ({ location, NewPost, UpdatePost, auth, Toggle_modal }) => {
         </FormGroup>
         <FormGroup>
           <Label>Body</Label>
-          <Input
+          <MDEditor value={value} onChange={setValue} />
+          {/* <Input
             type="textarea"
             name="body"
             rows={5}
             onChange={handleChange}
             value={postForm.body}
-          />
+          /> */}
+          <FormText color="muted">
+            * Markdown is supported{" "}
+            <a
+              target={`_blank`}
+              href="https://guides.github.com/features/mastering-markdown/#syntax"
+            >
+              <Badge color="secondary">Info</Badge>
+            </a>
+          </FormText>
         </FormGroup>
         <FormGroup>
           <Label>Snippet</Label>

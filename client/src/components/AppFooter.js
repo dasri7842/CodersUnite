@@ -14,13 +14,11 @@ const AppFooter = () => {
                   <img src={dp} alt="dp" className="dp mr-2"></img>
                   <h3>
                     <Link className="text-success" to="/about">
-                      About CPC
+                      About US
                     </Link>
                   </h3>
                 </div>
-                <p>
-                  Handcrafted with <i className="fa fa-handshake-o"></i>{" "}
-                </p>
+                <p>MERN Stack APP</p>
               </div>
             </Col>
             <Col md="4" sm="6">
@@ -53,7 +51,7 @@ const AppFooter = () => {
         </div>
       </footer>
       <div className="copyright">
-        <p>&copy;2020 TrueCoder-Hacks allowed</p>
+        <p>&copy;2020 Coders Unite</p>
       </div>
     </div>
   );

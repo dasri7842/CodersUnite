@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { Toggle_modal } from "./../actions/ToggleActions";
 import { connect } from "react-redux";
 import Loader from "./Loader";
-import Voter from "./styleditems/Voter";
 import CommentItem from "./styleditems/CommentItem";
 import FullSinglePost from "./styleditems/FullSinglePost";
 import { Button, FormGroup, Input } from "reactstrap";
@@ -53,7 +52,6 @@ const SinglePost = ({
       {!isloading ? (
         <div>
           <div className="d-flex">
-            <Voter votes={post.votes} id={match.params.id} />
             <FullSinglePost
               handleDelete={handleDelete}
               post={post}
